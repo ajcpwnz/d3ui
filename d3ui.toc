@@ -1,0 +1,49 @@
+## Interface: 90002
+## Title: d3ui
+## Author: ajcpwnz
+## Version: 0.2
+
+## SavedVariables: IActionBar_Conf, d3ui_Data
+## SavedVariablesPerCharacter: IActionBar_Conf
+
+consts.lua
+util.lua
+
+elements\Components\Timer.lua
+elements\Components\Cooldown.lua
+
+elements\ActionBar\config.lua
+elements\ActionBar\Button.lua
+elements\ActionBar\Core.lua
+
+init.lua
+elements\PlayerFrame.lua
+
+elements\StatusTrackerBar.lua
+elements\Power.lua
+elements\Points.lua
+
+elements\CCastBar.lua
+
+elements\MirrorTimers.lua
+
+elements\CAuraFrame.lua
+elements\CUnitFrame.lua
+elements\Party.lua
+
+elements\FPS.lua
+
+
+elements\Clarity\configs.lua
+elements\Clarity\context.lua
+elements\Clarity\templates.lua
+
+##
+elements\Clarity\Classes\Paladin.lua
+elements\Clarity\Classes\Priest.lua
+elements\Clarity\Classes\Mage.lua
+elements\Clarity\Classes\Druid.lua
+elements\Clarity\Classes\DeathKnight.lua
+##
+
+elements\Clarity\CClarity.lua
