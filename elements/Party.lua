@@ -2,7 +2,7 @@ CPartyFrame = {}
 
 function CPartyFrame:CreateFrame()
     self.frame = CreateFrame('Frame', 'd3ui_PartyFrame', d3ui_Superframe, BackdropTemplateMixin and "BackdropTemplate")
-    self.frame:SetSize(336, 284)
+    self.frame:SetSize(300, 284)
     self.frame:SetPoint("BOTTOM", 0, 20)
     self.frame:Show()
 end

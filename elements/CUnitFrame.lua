@@ -200,8 +200,16 @@ function CUnitFrame:CreateOuterFrame()
     self.outerFrame:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
 
     if (self.config.ROLE == 'party') then
-        self.outerFrame:SetScript("OnEnter", function() self.textNodes.hpText:Show() end)
-        self.outerFrame:SetScript("OnLeave", function() self.textNodes.hpText:Hide() end)
+        self.outerFrame:SetScript("OnEnter", function()
+             self.textNodes.hpText:Show() 
+             self.textNodes.nameText:Show() 
+             self.frame.texture:SetTexture(self.config.BAR_TEXTURE_HOVER)
+            end)
+        self.outerFrame:SetScript("OnLeave", function() 
+            self.frame.texture:SetTexture(self.config.BAR_TEXTURE)
+            self.textNodes.hpText:Hide()
+            self.textNodes.nameText:Hide()
+         end)
     end
 
     if (self.config.ROLE == 'raid') then
@@ -232,7 +240,7 @@ function CUnitFrame:CreateHealthFrame()
 
     local texture = self.frame:CreateTexture(nil, "BACKGROUND")
     texture:SetTexture(self.config.BAR_TEXTURE)
-
+    self.frame.texture = texture
     self.frame:SetBackdrop({ bgFile = self.config.BAR_BACKDROP })
     self.frame:SetStatusBarTexture(texture)
 
@@ -302,12 +310,14 @@ function CUnitFrame:CreateHealthFrame()
     local hpText = UTIL:AddText(self.textFrame)
 
     if (self.config.ROLE == 'party') then
-        levelText:SetPoint("TOPRIGHT", -2, 12)
-        nameText:SetPoint("TOPLEFT", 2, 12)
+        levelText:SetPoint("BOTTOMRIGHT", -2, -12)
+        nameText:SetPoint("BOTTOMLEFT", 2, -12)
         hpPercentText:SetPoint("BOTTOMRIGHT", -2, 2)
-        hpPercentText:SetFont(CONSTS.FONTS.BASE, 20)
+        hpPercentText:SetFont(CONSTS.FONTS.BASE, 14)
         hpText:SetPoint("BOTTOMLEFT", 2, 2)
         hpText:Hide()
+        nameText:Hide()
+        levelText:Hide()
     elseif (self.config.ROLE == 'raid') then
         levelText:Hide()
         nameText:SetPoint("TOPLEFT", 2, -2)
