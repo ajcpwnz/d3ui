@@ -1,6 +1,6 @@
 CONSTS = {
     ACTION_BARS = {
-        BAR_LIMIT = 5,
+        BAR_LIMIT = 6,
         BUTTON_LIMIT = 12,
     },
     UI_TICKINTERVAL = 0.3333,
@@ -45,54 +45,6 @@ CONSTS = {
                 reaction = true,
                 auras = true
             },
-        },
-        party1 = {
-            X = -30,
-            Y =  70,
-            POINT = "LEFT",
-            W = 96,
-            H = 48,
-            BAR_BACKDROP = "Interface\\AddOns\\d3ui\\inc\\Resources\\hp-b-party.blp",
-            BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party.blp',
-            ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
-            ROLE = 'party',
-            SPECIALS = {},
-        },
-        party2 = {
-            X = -30 + 96 + 4,
-            Y =  70,
-            POINT = "LEFT",
-            W = 96,
-            H = 48,
-            BAR_BACKDROP = "Interface\\AddOns\\d3ui\\inc\\Resources\\hp-b-party.blp",
-            BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party.blp',
-            ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
-            ROLE = 'party',
-            SPECIALS = {},
-        },
-        party3 = {
-            X = -30 + (96 * 2) + 8,
-            Y = 70,
-            POINT = "LEFT",
-            W = 96,
-            H = 48,
-            BAR_BACKDROP = "Interface\\AddOns\\d3ui\\inc\\Resources\\hp-b-party.blp",
-            BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party.blp',
-            ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
-            ROLE = 'party',
-            SPECIALS = {},
-        },
-        party4 = {
-            X = -30 + (96 * 3) + 12,
-            Y = 70,
-            POINT = "LEFT",
-            W = 96,
-            H = 48,
-            BAR_BACKDROP = "Interface\\AddOns\\d3ui\\inc\\Resources\\hp-b-party.blp",
-            BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party.blp',
-            ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
-            ROLE = 'party',
-            SPECIALS = {},
         },
     },
     MAX_LVL = 60,
@@ -205,8 +157,28 @@ CONSTS = {
     }
 }
 
+
+
+
 local raidW = 64
 local raidH = 32
+local partyX = 1
+local partyW = 80;
+
+for unit = 1,4 do
+    CONSTS.UNIT_CONFIGS['party' .. unit] = {
+        X = partyX + (partyW * (unit - 1)) + 4 * (unit - 1),
+        Y = -70,
+        POINT = "TOPLEFT",
+        W = partyW,
+        H = raidH,
+        BAR_BACKDROP = "Interface\\AddOns\\d3ui\\inc\\Resources\\hp-bg-raid.blp",
+        BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-raid.blp',
+        ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
+        ROLE = 'party',
+        SPECIALS = {},
+    }
+end
 
 for group = 1, 8 do
     for unit = 1, 5 do

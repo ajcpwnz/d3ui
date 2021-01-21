@@ -9,7 +9,7 @@ end
 
 function CPartyFrame:AddNestedFrames()
     for i = 1, 4 do
-        self['frame' .. i] = d3ui.CUnitFrame:Load('party' .. i, self.frame, 'party' .. i)
+        self['frame' .. i] = d3ui.CUnitFrame:Load('player', self.frame, 'party' .. i)
     end
 end
 

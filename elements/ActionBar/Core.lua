@@ -178,6 +178,7 @@ function IActionBar:UpdateBars()
         bar:UpdateButtons()
     end
 end
+d3ui_Data = {}
 
 function IActionBar:Load()
     if(not d3ui_Data) then

@@ -53,8 +53,7 @@ function d3ui:HideBlizz()
      StanceBarFrame:SetParent(d3ui_InvisibleFrame)
      StanceBarFrame:ClearAllPoints()
 
-     MainMenuBar:SetScript("OnEvent", nil);
-     MainMenuBar:Hide()
+     MainMenuBar:SetParent(d3ui_InvisibleFrame)
 
      PetActionBarFrame:SetParent(d3ui_InvisibleFrame)
      PetActionBarFrame:ClearAllPoints()
@@ -65,8 +64,7 @@ function d3ui:HideBlizz()
      ChatFrame1:SetSize(400, 1050)
      ChatFrame1.SetSize = nop
 
-     MicroButtonAndBagsBar:Hide()
-     MicroButtonAndBagsBar:SetScript("OnEvent", nil);
+     MicroButtonAndBagsBar:SetParent(d3ui_InvisibleFrame)
 end
 
 function LoadTestFrame()
@@ -111,10 +109,10 @@ function d3ui:LoadElems()
 end
 
 function deb()
---    d3ui_Data.ActionBars = {}
+   d3ui_Data.ActionBars = {}
 --    CompactPartyFrame:Hide()
-    CompactRaidFrameContainer:Hide()
-    CompactRaidFrameContainer:UnregisterAllEvents()
+    -- CompactRaidFrameContainer:Hide()
+    -- CompactRaidFrameContainer:UnregisterAllEvents()
 end
 
 

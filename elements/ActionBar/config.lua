@@ -19,8 +19,18 @@ ActionBarBindMap = {
     ['SQ'] = 'SHIFT-Q',
     ['B5'] = 'BUTTON5',
     ['B4'] = 'BUTTON4',
-    ['CQ'] = 'CONTROL-Q',
-    ['CM5'] = 'CONTROL-BUTTON5',
+    ['CQ'] = 'CTRL-Q',
+    ['CM5'] = 'CTRL-BUTTON5',
+    ['A1'] = 'ALT-1',
+    ['A2'] = 'ALT-2',
+    ['A3'] = 'ALT-3',
+    ['A4'] = 'ALT-4',
+    ['AF'] = 'ALT-F',
+    ['AE'] = 'ALT-E',
+    ['AR'] = 'ALT-R',
+    ['AQ'] = 'ALT-Q',
+    ['AM5'] = 'ALT-BUTTON5',
+    ['AM4'] = 'ALT-BUTTON4',
 }
 
 d3ui_ActionBarTabs = 12
@@ -94,9 +104,9 @@ d3ui_ActionBarDefaultConf = {
             SIZE = 24,
             SPACE = 4,
             POINT = 'BOTTOM',
-            MODEST = true,
+            MODEST = false,
             X = 0,
-            Y = 4
+            Y = 280
         }
     },
     [3]  = {
@@ -165,6 +175,30 @@ d3ui_ActionBarDefaultConf = {
             POINT = 'TOP',
             X = 0,
             Y = 0
+        }
+    },
+    [6]  = {
+        length = 10,
+        buttons = {
+            [1] = { bind='A1', tabs = {}},
+            [2] = { bind='A2', tabs = {}},
+            [3] = { bind='A3', tabs = {}},
+            [4] = { bind='A4', tabs = {}},
+            [5] = {bind='AF', tabs = {}},
+            [6] = { bind='AE', tabs = {}},
+            [7] = { bind='AR', tabs = {}},
+            [8] = { bind='AQ', tabs = {}},
+            [9] = { bind='AM5',tabs = {}},
+            [10] = {bind='AM4', tabs = {}},
+        },
+        DISPLAY = {
+            ORIENTATION = 'VERTICAL',
+            SIZE = 24,
+            SPACE = 4,
+            MODEST = false,
+            POINT = 'BOTTOM',
+            X = 0,
+            Y = 250
         }
     }
 }
