@@ -82,7 +82,7 @@ d3ui_ActionBarDefaultConf = {
             SPACE = 4,
             POINT = 'BOTTOM',
             X = 0,
-            Y = 310
+            Y = 330
         }
     },
     [2] = {
@@ -106,7 +106,7 @@ d3ui_ActionBarDefaultConf = {
             POINT = 'BOTTOM',
             MODEST = false,
             X = 0,
-            Y = 280
+            Y = 300
         }
     },
     [3]  = {
@@ -198,7 +198,7 @@ d3ui_ActionBarDefaultConf = {
             MODEST = false,
             POINT = 'BOTTOM',
             X = 0,
-            Y = 250
+            Y = 270
         }
     }
 }

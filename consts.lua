@@ -49,7 +49,7 @@ CONSTS = {
     },
     MAX_LVL = 60,
     COORDS = {
-        HEALTH_FRAME_Y = -230,
+        HEALTH_FRAME_Y = -210,
     },
     LAYERS = {
         __BASE = 10,
@@ -162,14 +162,15 @@ CONSTS = {
 
 local raidW = 64
 local raidH = 32
+
 local partyX = 1
-local partyH = 36;
-local partyW = 72;
+local partyH = 32;
+local partyW = 64;
 
 for unit = 1,4 do
     CONSTS.UNIT_CONFIGS['party' .. unit] = {
-        X = partyX + (partyW * (unit - 1)) + 4 * (unit - 1),
-        Y = -70,
+        X = 16 + (partyW * (unit - 1)) + 4 * (unit - 1),
+        Y = -40,
         POINT = "TOPLEFT",
         W = partyW,
         H = partyH,
@@ -178,25 +179,25 @@ for unit = 1,4 do
         BAR_TEXTURE_HOVER = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party-hover.blp',
         ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
         ROLE = 'party',
-        SPECIALS = {},
+        SPECIALS = {essential_autra = true},
     }
 end
 
 for group = 1, 8 do
     for unit = 1, 5 do
         local unitIdx = ((group - 1) * 5) + unit
-
         CONSTS.UNIT_CONFIGS['raid' .. unitIdx] = {
-            X = (raidW * (unit - 1)) + 4 * (unit - 1),
-            Y = -raidH * (group - 1) - 4 * (group - 1),
+            X = -8 + (raidW * (unit - 1)),
+            Y = -45  -raidH * (group - 1),
             POINT = "TOPLEFT",
             W = raidW,
             H = raidH,
             BAR_BACKDROP = "Interface\\AddOns\\d3ui\\inc\\Resources\\hp-bg-raid.blp",
-            BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-raid.blp',
+            BAR_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party.blp',
+            BAR_TEXTURE_HOVER = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party-hover.blp',
             ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
             ROLE = 'raid',
-            SPECIALS = {},
+            SPECIALS = {essential_autra = true},
         }
     end
 end
