@@ -146,6 +146,7 @@ CONSTS = {
         THREAT_BG = 'Interface\\AddOns\\d3ui\\inc\\threat-bg.blp',
         BAR_PLAIN = 'Interface\\AddOns\\d3ui\\inc\\bar-plain.blp',
         ROLES = 'Interface\\AddOns\\d3ui\\inc\\roles.blp',
+        BTN_BACKGROUND= 'Interface\\AddOns\\d3ui\\inc\\btn-b.blp',
     },
     FONTS = {
         BASE = "Interface\\AddOns\\d3ui\\inc\\Fonts\\Staatliches-Regular.ttf"

@@ -365,7 +365,7 @@ function CUnitFrame:CreateHealthFrame()
     if (self.config.ROLE == 'party' or self.config.ROLE == 'raid' ) then
         self.roleIcon = self.frame:CreateTexture(nil, "OVERLAY")
         if(self.config.ROLE == 'party') then
-            self.roleIcon:SetPoint('TOPLEFT', 4, -27)
+            self.roleIcon:SetPoint('TOPLEFT', 4, -14)
         else
             self.roleIcon:SetPoint('TOPLEFT', 4, -12)
         end

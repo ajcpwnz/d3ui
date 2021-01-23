@@ -8,6 +8,7 @@ local Lookup = {
             if (not sp) then return nil end
             return IsSpellInRange(sp, "spell", b)
         end,
+        ['flyout'] = function() return nil end,
         ['empty'] = function() return nil end,
         ['macro'] = function() return nil end,
         ['summonmount'] = function() return 1 end,
@@ -16,6 +17,7 @@ local Lookup = {
     },
     usable = {
         ['spell'] = IsUsableSpell,
+        ['flyout'] = IsUsableSpell,
         ['empty'] = function() return nil end,
         ['macro'] = function() return true end,
         ['summonmount'] = function() return true end,
@@ -24,15 +26,21 @@ local Lookup = {
     },
     cooldown = {
         ['spell'] = GetSpellCooldown,
+        ['flyout'] = GetSpellCooldown,
         ['empty'] = function() return nil end,
         ['macro'] = function() return nil end,
         ['summonmount'] = function() return nil end,
         ['mount'] = function() return nil end,
-        ['item'] = function() return nil end,
+        ['item'] = GetItemCooldown,
     },
     icon = {
         ['spell'] = function(id)
             local _, _, icon = GetSpellInfo(id)
+            return icon
+        end,
+        ['flyout'] = function(id)
+            local spellID = GetFlyoutSlotInfo(id, 1);
+            local _, _, icon = GetSpellInfo(spellID)
             return icon
         end,
         ['item'] = function(id)
@@ -55,6 +63,33 @@ local Lookup = {
             local _, _, icon = GetSpellInfo(spellId)
             return icon
         end,
+    },
+    count = {
+        ['spell'] = GetSpellCharges,
+        ['item'] = function(id) local count = GetItemCount(id); return count, count end,
+        ['macro'] = function(id) return nil end,
+        ['summonmount'] = function(id) return nil end,
+        ['mount'] = function(id) return nil end,
+        ['empty'] = function() return nil end,
+        ['flyout'] = function() return nil end,
+    },
+    tooltip = {
+        ['spell'] = function(id)GameTooltip:SetSpellByID(id) end,
+        ['item'] = function(id) 
+            GameTooltip:SetHyperlink('item:' .. id)
+        end,
+        ['summonmount'] = function() return nil end,
+        ['mount'] = function() return nil end,
+        ['empty'] = function() return nil end,
+        ['flyout'] = function(id, ref) 
+            local title, description = GetFlyoutInfo(id)
+            GameTooltip:SetOwner(ref, "ANCHOR_RIGHT");
+            GameTooltip:AddLine(title, 1,1,1)
+            GameTooltip:AddLine(description)
+            GameTooltip:SetWidth(200)
+            GameTooltip:Show()
+        end,
+        ['macro'] = function(id) return nil end,
     }
 }
 
@@ -67,11 +102,6 @@ function d3ui_Button:AddUIElements()
 
     self.Border:Hide()
     self.NormalTexture:SetTexture(nil)
-
-
-    --    if(buttonIndex == 1) then
-    --       for k,v in pairs(btn) do print(k) end
-    --    end
 
     self:SetSize(bar.config.DISPLAY.SIZE, bar.config.DISPLAY.SIZE)
 
@@ -90,14 +120,19 @@ function d3ui_Button:AddUIElements()
     border:SetAlpha(0)
     self.border = border
 
-    local texture = self:CreateTexture(nil, "BACKGROUND")
+    local background = self:CreateTexture(nil, "BACKGROUND")
+    background:SetPoint('TOPLEFT', 0,0)
+    background:SetPoint('BOTTOMRIGHT', 0,0)
+    background:SetTexture(CONSTS.TEXTURES.BTN_BACKGROUND)
+    self.background = background
+    
+    local texture = self:CreateTexture(nil, "ARTWORK")
     texture:SetPoint('TOPLEFT', 2, -2)
     texture:SetPoint('BOTTOMRIGHT', -2, 2)
-    texture:SetSize(28, 28)
     texture:SetTexCoord(0.1, .9, 0.1, .9)
     self.texture = texture
 
-    local overlay = self:CreateTexture(nil, "ARTWORK")
+    local overlay = self:CreateTexture(nil, "OVERLAY")
     overlay:SetPoint('TOPLEFT', 2, -2)
     overlay:SetPoint('BOTTOMRIGHT', -2, 2)
     overlay:SetAlpha(0)
@@ -200,13 +235,8 @@ end
 function d3ui_Button:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
     local action = self.act_n
-    if (action) then
-        if (action.type == 'spell') then
-            GameTooltip:SetSpellByID(action.id)
-        elseif (action.type == 'item') then
-            GameTooltip:SetHyperlink('item:' .. action.id)
-        end
-    end
+    Lookup.tooltip[self.act_n.type](self.act_n.id, self)
+
     if (self.hasGlow) then return end;
     self.overlay:SetAlpha(1)
     self.border:SetVertexColor(1, 1, 1, 1)
@@ -222,7 +252,7 @@ function d3ui_Button:OnLeave()
 
     if (self.hasGlow) then return end;
     self.overlay:SetAlpha(0)
-    if (self.act_n) then
+    if (self.act_n and self.act_n.type ~= 'empty') then
         self.border:SetVertexColor(40 / 255, 40 / 255, 40 / 255, 1)
     else
         self.border:SetAlpha(0)
@@ -257,7 +287,7 @@ function d3ui_Button:Update()
 
     local icon = Lookup.icon[self.act_n.type](self.act_n.id, "target")
 
-    local currentCharges, maxCharges = GetSpellCharges(action.id)
+    local currentCharges, maxCharges = Lookup.count[self.act_n.type](action.id)
     local count = GetSpellCount(action.id)
     self.hasCharges = (maxCharges and (maxCharges > 1)) or (count and count > 0)
     --print('....', self.hasCharges)
@@ -326,7 +356,7 @@ function d3ui_Button:UpdateCharges()
     if (self.hasCharges) then
         local charges = 0
         if (self.act_n) then
-            charges = GetSpellCharges(self.act_n.id)
+            charges = Lookup.count[self.act_n.type](self.act_n.id)
             if (not charges) then
                 charges = GetSpellCount(self.act_n.id)
             end
@@ -477,16 +507,6 @@ function d3ui_Button:AttachSecureHandlers() -- parent frame that wraps these
     self.bar.frame:WrapScript(self, "OnDragStart", [[ return self:RunAttribute("OnDragStart", kind, value, ...) ]])
     self.bar.frame:WrapScript(self, "OnReceiveDrag", [[ return self:RunAttribute("OnReceiveDrag", kind, value, ...) ]])
 
-
---    self.bar.frame:WrapScript(self, "PreClick", [[
---    	local kind, value, _subtype = ...
---	    if not (kind and value) then return end
---	    print(kind, value, '<<')
---        self:SetAttribute('shouldUpdateOnDrag', true)
---
---        return self:RunAttribute("AttemptBoundActionUpdate")
---    ]])
-
     self.bar.frame:WrapScript(self, "PostClick", [[
         return self:RunAttribute("AttemptBoundActionUpdate")
     ]])
@@ -499,6 +519,7 @@ function d3ui_Button:ApplyConfig(config)
 
     if (config.tabs[self.tab]) then
         local tabConfig = deepcopy(config.tabs[self.tab])
+        print(tabConfig.type)
         if (tabConfig.type ~= 'empty') then
             self:SetAttribute('type', 'action')
         else
