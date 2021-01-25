@@ -105,11 +105,17 @@ function d3ui_Button:AddUIElements()
 
     self:SetSize(bar.config.DISPLAY.SIZE, bar.config.DISPLAY.SIZE)
 
+    local rows = bar.config.DISPLAY.ROWS or 1
+    local rowCells = (bar.config.length / rows)
+    local row = math.ceil(self._id / rowCells)
 
     if (bar.config.DISPLAY.ORIENTATION == 'HORIZONTAL') then
         self:SetPoint('TOP', 0, -(self._id - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE))
     else
-        self:SetPoint('LEFT', (self._id - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE), 0)
+        self:SetPoint('LEFT', 
+            (self._id - ((row - 1) * rowCells) - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE),
+            - (row - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE)
+        )
     end
 
     local border = self:CreateTexture(nil, "OVERLAY")
@@ -141,12 +147,12 @@ function d3ui_Button:AddUIElements()
 
     local bindText = self:CreateFontString(nil, "OVERLAY")
     bindText:SetPoint("TOPRIGHT", -2, 2)
-    bindText:SetFont(CONSTS.FONTS.BASE, bar.config.DISPLAY.SIZE * 0.5, "OUTLINE")
+    bindText:SetFont(CONSTS.FONTS.BASE, bar.config.DISPLAY.FONT_SIZE, "OUTLINE")
     self.bindText = bindText
 
     local chargesText = self:CreateFontString(nil, "OVERLAY")
     chargesText:SetPoint("BOTTOMRIGHT", -2, -2)
-    chargesText:SetFont(CONSTS.FONTS.BASE, bar.config.DISPLAY.SIZE * 0.5, "OUTLINE")
+    chargesText:SetFont(CONSTS.FONTS.BASE, bar.config.DISPLAY.FONT_SIZE, "OUTLINE")
     self.chargesText = chargesText
 
 
@@ -169,13 +175,15 @@ function d3ui_Button:SetUpMeta()
         buttonIndexes[4] = 96 + self._id -- bear
         buttonIndexes[6] = 72 + self._id -- bear
         buttonIndexes[5] = 84 + self._id -- bear
+        buttonIndexes[10] = 109 + self._id -- bear
     else
         buttonIndexes[4] = buttonIndexes[0]
         buttonIndexes[6] = buttonIndexes[0]
         buttonIndexes[5] = buttonIndexes[0]
+        buttonIndexes[10] = buttonIndexes[0]
     end
 
-    local actionId = buttonIndexes[0]
+    local actionId = buttonIndexes[self.bar.stateTab]
     local type, id, actionMisc = GetActionInfo(actionId)
 
     if (type) then

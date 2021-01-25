@@ -199,10 +199,8 @@ function CUnitFrame:CreateOuterFrame()
     self.outerFrame:SetAttribute("type2", "togglemenu")
     self.outerFrame:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
 
-    if (self.config.ROLE == 'party') then
+    if (self.config.ROLE == 'party' or self.config.ROLE == 'raid' ) then
         self.outerFrame:SetScript("OnEnter", function()
-             self.textNodes.hpText:Show() 
-             self.textNodes.nameText:Show() 
              self.frame.texture:SetTexture(self.config.BAR_TEXTURE_HOVER)
             end)
         self.outerFrame:SetScript("OnLeave", function() 
@@ -212,16 +210,6 @@ function CUnitFrame:CreateOuterFrame()
          end)
     end
 
-    if (self.config.ROLE == 'raid') then
-        self.outerFrame:SetScript("OnEnter", function()
-            self.textNodes.hpText:Show()
-            self.textNodes.nameText:Show()
-        end)
-        self.outerFrame:SetScript("OnLeave", function()
-            self.textNodes.hpText:Hide()
-            self.textNodes.nameText:Hide()
-        end)
-    end
     self.outerFrame:EnableMouse(true)
 
     self.textNodes = {}
@@ -312,7 +300,7 @@ function CUnitFrame:CreateHealthFrame()
     if (self.config.ROLE == 'party') then
         levelText:SetPoint("BOTTOMRIGHT", -2, -12)
         nameText:SetPoint("BOTTOMLEFT", 2, -12)
-        hpPercentText:SetPoint("BOTTOMRIGHT", -2, 2)
+        hpPercentText:SetPoint("BOTTOMLEFT", 2, 2)
         hpPercentText:SetFont(CONSTS.FONTS.BASE, 14)
         hpText:SetPoint("BOTTOMLEFT", 2, 2)
         hpText:Hide()
@@ -321,7 +309,7 @@ function CUnitFrame:CreateHealthFrame()
     elseif (self.config.ROLE == 'raid') then
         levelText:Hide()
         nameText:SetPoint("TOPLEFT", 2, -2)
-        hpPercentText:SetPoint("BOTTOMRIGHT", -2, 2)
+        hpPercentText:SetPoint("BOTTOMLEFT", 2, 2)
         hpPercentText:SetFont(CONSTS.FONTS.BASE, 14)
         hpText:SetPoint("BOTTOMLEFT", 2, 2)
         nameText:Hide()
@@ -342,6 +330,9 @@ function CUnitFrame:CreateHealthFrame()
         end
     end
 
+    if(self.config.SPECIALS.essential_aura) then
+        self.essentials = d3ui.EssentialAura:Load(self.unit, self.outerFrame)
+    end
 
     self.textNodes.nameText = nameText
     self.textNodes.levelText = levelText
@@ -364,12 +355,7 @@ function CUnitFrame:CreateHealthFrame()
 
     if (self.config.ROLE == 'party' or self.config.ROLE == 'raid' ) then
         self.roleIcon = self.frame:CreateTexture(nil, "OVERLAY")
-        if(self.config.ROLE == 'party') then
-            self.roleIcon:SetPoint('TOPLEFT', 4, -14)
-        else
-            self.roleIcon:SetPoint('TOPLEFT', 4, -12)
-        end
-
+        self.roleIcon:SetPoint('BOTTOMRIGHT', -2, 2)
         self.roleIcon:SetSize(16, 16)
     end
 

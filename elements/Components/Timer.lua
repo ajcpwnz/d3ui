@@ -27,8 +27,8 @@ function CTimer:CreateFrame()
     frame:SetFrameStrata("HIGH")
     frame:SetFrameLevel(100)
     frame.text = UTIL:AddText(frame)
+    
     frame.text:SetFont(CONSTS.FONTS.BASE, 12, 'OUTLINE')
-    frame.text:SetPoint(self.pointConfig.point or 'BOTTOMRIGHT', self.pointConfig.x or 0, self.pointConfig.y or 0)
     frame.text:SetPoint(self.pointConfig.point or 'BOTTOMRIGHT', self.pointConfig.x or 0, self.pointConfig.y or 0)
 
     self.frame = frame

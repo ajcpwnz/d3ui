@@ -68,7 +68,7 @@ function UTIL:AddText(frame)
     local textNode = frame:CreateFontString(nil, "ARTWORK")
     textNode:SetFont(CONSTS.FONTS.BASE, 11, "")
     textNode:SetShadowOffset(1,-1)
-    textNode:SetShadowColor(0,0,0,.8)
+    textNode:SetShadowColor(0,0,0,.95)
     textNode:SetTextColor(.95,.95,.95,1)
 
     if(frame.overrideColor) then
@@ -177,4 +177,9 @@ function callIfCallable(f)
         end
         -- nothing to do, as though not called, or print('error', result)
     end
+end
+
+function UTIL:GetClassToken(unit) 
+    local _, token = UnitClass(unit)
+    return token
 end

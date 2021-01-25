@@ -7,8 +7,8 @@ function CActionBar:CreateFrame()
     frame:Show()
 
     frame:SetAttribute("_onstate-page", [[
-
         local st = newstate
+
         if(st == 'override') then
             if HasVehicleActionBar() then
                 st = GetVehicleBarIndex()
@@ -23,19 +23,20 @@ function CActionBar:CreateFrame()
         self:SetAttribute('tabref', st)
     ]])
 
-    RegisterStateDriver(frame, "page", '[overridebar][possessbar][shapeshift]override;[bonusbar:3]4;[bonusbar:1,stealth:1]5;[bonusbar:1]6;0')
+    RegisterStateDriver(frame, "page", '[overridebar][possessbar][shapeshift]override;[bonusbar:3]4;[bonusbar:1,stealth:1]5;[bonusbar:1]6;[bonusbar:4] 10;0')
 
     self.frame = frame
 end
 
 function CActionBar:CreateButtons()
-    local buttons = {}
+    local buttons = {}  
+
+    self.stateTab = self.frame:GetAttribute('tabref')
 
     for i = 1, CONSTS.ACTION_BARS.BUTTON_LIMIT do
         if(not self.config.buttons[i]) then
             self.config.buttons[i] = d3ui_ActionBarEmptyButton
         end
-
         local btn = d3ui_ActionButtonCreate(self.index, i, self)
 
         btn:ApplyConfig(self.config.buttons[i])

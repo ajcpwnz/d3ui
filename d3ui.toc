@@ -28,6 +28,8 @@ elements\CCastBar.lua
 elements\MirrorTimers.lua
 
 elements\CAuraFrame.lua
+elements\CAuraIcon.lua
+elements\CEssentialAura.lua
 elements\CUnitFrame.lua
 elements\Party.lua
 

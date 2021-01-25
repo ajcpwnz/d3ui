@@ -1,6 +1,6 @@
 CONSTS = {
     ACTION_BARS = {
-        BAR_LIMIT = 6,
+        BAR_LIMIT = 8,
         BUTTON_LIMIT = 12,
     },
     UI_TICKINTERVAL = 0.3333,
@@ -49,7 +49,7 @@ CONSTS = {
     },
     MAX_LVL = 60,
     COORDS = {
-        HEALTH_FRAME_Y = -210,
+        HEALTH_FRAME_Y = -200,
     },
     LAYERS = {
         __BASE = 10,
@@ -149,7 +149,7 @@ CONSTS = {
         BTN_BACKGROUND= 'Interface\\AddOns\\d3ui\\inc\\btn-b.blp',
     },
     FONTS = {
-        BASE = "Interface\\AddOns\\d3ui\\inc\\Fonts\\Staatliches-Regular.ttf"
+        BASE = "Interface\\AddOns\\d3ui\\inc\\Fonts\\Ruda-SemiBold.ttf"
     },
     ROLE_TEX_COORDS = {
         TANK = { l = 0, r = 1, t = 0, b = 0.25 },
@@ -161,17 +161,16 @@ CONSTS = {
 
 
 
-local raidW = 64
-local raidH = 32
-
 local partyX = 1
-local partyH = 32;
-local partyW = 64;
+local partyH = 36;
+local partyW = partyH * 2.25;
+local raidW = partyH * 2.25;
+local raidH = partyH
 
 for unit = 1,4 do
     CONSTS.UNIT_CONFIGS['party' .. unit] = {
-        X = 16 + (partyW * (unit - 1)) + 4 * (unit - 1),
-        Y = -40,
+        X = -11 + (partyW * (unit - 1)),
+        Y = -45,
         POINT = "TOPLEFT",
         W = partyW,
         H = partyH,
@@ -180,7 +179,7 @@ for unit = 1,4 do
         BAR_TEXTURE_HOVER = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party-hover.blp',
         ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
         ROLE = 'party',
-        SPECIALS = {essential_autra = true},
+        SPECIALS = {essential_aura = true},
     }
 end
 
@@ -188,7 +187,7 @@ for group = 1, 8 do
     for unit = 1, 5 do
         local unitIdx = ((group - 1) * 5) + unit
         CONSTS.UNIT_CONFIGS['raid' .. unitIdx] = {
-            X = -8 + (raidW * (unit - 1)),
+            X = -51 + (raidW * (unit - 1)),
             Y = -45  -raidH * (group - 1),
             POINT = "TOPLEFT",
             W = raidW,
@@ -198,7 +197,7 @@ for group = 1, 8 do
             BAR_TEXTURE_HOVER = 'Interface\\AddOns\\d3ui\\inc\\Resources\\hp-party-hover.blp',
             ABSORB_TEXTURE = 'Interface\\AddOns\\d3ui\\inc\\Resources\\party-absorb.blp',
             ROLE = 'raid',
-            SPECIALS = {essential_autra = true},
+            SPECIALS = {essential_aura = true},
         }
     end
 end

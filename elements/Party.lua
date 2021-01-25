@@ -10,12 +10,12 @@ function CPartyFrame:CreateFrame()
 
     self.partyFrame = CreateFrame('Frame', 'd3ui_PartyPartyFrame', d3ui_InvisibleFrame, BackdropTemplateMixin and "BackdropTemplate")
     self.partyFrame:SetSize(300, 284)
-    self.partyFrame:SetPoint("BOTTOM", 0, 20)
+    self.partyFrame:SetPoint("BOTTOM", 0, 55)
     self.partyFrame:Show()
 
     self.raidFrame = CreateFrame('Frame', 'd3ui_PartyRaidFrame', d3ui_InvisibleFrame, BackdropTemplateMixin and "BackdropTemplate")
     self.raidFrame:SetSize(300, 284)
-    self.raidFrame:SetPoint("BOTTOM", 0, 20)
+    self.raidFrame:SetPoint("BOTTOM", 0, 55)
     self.raidFrame:Show()
 end
 
@@ -23,13 +23,13 @@ function CPartyFrame:AddNestedFrames()
     for i = 1, 4 do
         self['party' .. i] = d3ui.CUnitFrame:Load(deb_unit or 'party' .. i, self.partyFrame, 'party' .. i)
     end
-end
+end 
 
 function CPartyFrame:AddRaidFrames()
     for partyIndex = 1, 8 do
         for i = 1, 5 do
             local index = ((partyIndex - 1) * 5) + i
-            self['raid' .. index] = d3ui.CUnitFrame:Load(deb_unit or 'raid' .. index, self.raidFrame, 'raid' .. index)
+            self['raid' .. index] = d3ui.CUnitFrame:Load('raid' .. index, self.raidFrame, 'raid' .. index)
         end
     end
 end
@@ -38,7 +38,7 @@ end
 function CPartyFrame:HandleChange()
     local inst = self
 
-    if(IsInRaid() or deb_unit) then 
+    if(IsInRaid()) then 
         inst.raidFrame:SetParent(inst.frame)
         inst.partyFrame:SetParent(d3ui_InvisibleFrame)
         for i = 1, 40 do
@@ -46,7 +46,7 @@ function CPartyFrame:HandleChange()
         end
     else
         inst.raidFrame:SetParent(d3ui_InvisibleFrame)
-        if( IsInGroup()) then 
+        if( IsInGroup()  or deb_unit) then 
             inst.partyFrame:SetParent(inst.frame)
             for i = 1, 4 do
                 inst['party' .. i]:HandleChange()

@@ -31,6 +31,10 @@ ActionBarBindMap = {
     ['AQ'] = 'ALT-Q',
     ['AM5'] = 'ALT-BUTTON5',
     ['AM4'] = 'ALT-BUTTON4',
+    ['C1'] = 'CTRL-1',
+    ['C2'] = 'CTRL-2',
+    ['C3'] = 'CTRL-3',
+    ['CE'] = 'CTRL-E',
 }
 
 d3ui_ActionBarTabs = 12
@@ -79,10 +83,11 @@ d3ui_ActionBarDefaultConf = {
         },
         DISPLAY = {
             SIZE = 32,
+            FONT_SIZE = 14,
             SPACE = 4,
             POINT = 'BOTTOM',
             X = 0,
-            Y = 330
+            Y = 300
         }
     },
     [2] = {
@@ -102,11 +107,12 @@ d3ui_ActionBarDefaultConf = {
         },
         DISPLAY = {
             SIZE = 24,
+            FONT_SIZE = 11,
             SPACE = 4,
             POINT = 'BOTTOM',
             MODEST = false,
             X = 0,
-            Y = 300
+            Y = 340
         }
     },
     [3]  = {
@@ -128,6 +134,7 @@ d3ui_ActionBarDefaultConf = {
         DISPLAY = {
             ORIENTATION = 'HORIZONTAL',
             SIZE = 24,
+            FONT_SIZE = 11,
             SPACE = 4,
             POINT = 'RIGHT',
             X = -4,
@@ -153,6 +160,7 @@ d3ui_ActionBarDefaultConf = {
         DISPLAY = {
             ORIENTATION = 'HORIZONTAL',
             SIZE = 24,
+            FONT_SIZE = 11,
             SPACE = 4,
             POINT = 'RIGHT',
             X = -4,
@@ -170,35 +178,75 @@ d3ui_ActionBarDefaultConf = {
         DISPLAY = {
             ORIENTATION = 'VERTICAL',
             SIZE = 24,
+            FONT_SIZE = 11,
             SPACE = 4,
             MODEST = true,
             POINT = 'TOP',
-            X = 0,
+            X = 108,
             Y = 0
         }
     },
     [6]  = {
-        length = 10,
+        length = 6,
         buttons = {
             [1] = { bind='A1', tabs = {}},
             [2] = { bind='A2', tabs = {}},
             [3] = { bind='A3', tabs = {}},
             [4] = { bind='A4', tabs = {}},
-            [5] = {bind='AF', tabs = {}},
-            [6] = { bind='AE', tabs = {}},
-            [7] = { bind='AR', tabs = {}},
-            [8] = { bind='AQ', tabs = {}},
-            [9] = { bind='AM5',tabs = {}},
-            [10] = {bind='AM4', tabs = {}},
+            [5] = {bind='AE', tabs = {}},
+            [6] = { bind='AF', tabs = {}},
         },
         DISPLAY = {
             ORIENTATION = 'VERTICAL',
             SIZE = 24,
+            FONT_SIZE = 11,
             SPACE = 4,
             MODEST = false,
             POINT = 'BOTTOM',
+            ROWS = 2,
+            X = -184,
+            Y = 340
+        }
+    },
+    [7]  = {
+        length = 6,
+        buttons = {
+            [1] = { bind='AR', tabs = {}},
+            [2] = { bind='AQ', tabs = {}},
+            [3] = {  tabs = {}},
+            [4] = {  tabs = {}},
+            [5] = {bind='AM5', tabs = {}},
+            [6] = { bind='AM4', tabs = {}},
+        },
+        DISPLAY = {
+            ORIENTATION = 'VERTICAL',
+            SIZE = 24,
+            FONT_SIZE = 11,
+            SPACE = 4,
+            MODEST = false,
+            POINT = 'BOTTOM',
+            ROWS = 2,
+            X = 264,
+            Y = 340
+        }
+    },
+    [8]  = {
+        length = 4,
+        buttons = {
+            [1] = { bind='C1', tabs = {}},
+            [2] = { bind='C2', tabs = {}},
+            [3] = {  bind='C3', tabs = {}},
+            [4] = {  bind='CE', tabs = {}},
+        },
+        DISPLAY = {
+            ORIENTATION = 'VERTICAL',
+            SIZE = 24,
+            FONT_SIZE = 11,
+            SPACE = 4,
+            MODEST = false,
+            POINT = 'TOP',
             X = 0,
-            Y = 270
+            Y = 0
         }
     }
 }
