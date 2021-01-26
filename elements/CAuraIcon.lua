@@ -21,7 +21,7 @@ function CAuraIcon:CreateFrame()
 end
 
 function CAuraIcon:HandleChange()
-    local found, icon, count, debuffType, duration, expirationTime = AuraUtil.FindAuraByName(self.name, 'player')
+    local found, icon, count, debuffType, duration, expirationTime = AuraUtil.FindAuraByName(self.name, self.unit)
     if (found) then 
         self.texture:SetTexture(icon)
         self.texture:SetAllPoints(self.frame)
