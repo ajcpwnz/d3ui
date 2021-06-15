@@ -29,7 +29,7 @@ function CActionBar:CreateFrame()
 end
 
 function CActionBar:CreateButtons()
-    local buttons = {}  
+    local buttons = {}
 
     self.stateTab = self.frame:GetAttribute('tabref')
 
@@ -103,6 +103,7 @@ function IActionBar:AddEventHandlers()
     local events = {}
 
     function events:PLAYER_SPECIALIZATION_CHANGED()
+        print('pr')
         inst:UpdateUnitProps()
         inst:UpdateBars()
     end

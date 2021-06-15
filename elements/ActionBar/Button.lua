@@ -12,6 +12,7 @@ local Lookup = {
         ['empty'] = function() return nil end,
         ['macro'] = function() return nil end,
         ['summonmount'] = function() return 1 end,
+        ['summonpet'] = function() return 1 end,
         ['mount'] = function() return 1 end,
         ['item'] = IsItemInRange,
     },
@@ -21,6 +22,7 @@ local Lookup = {
         ['empty'] = function() return nil end,
         ['macro'] = function() return true end,
         ['summonmount'] = function() return true end,
+        ['summonpet'] = function() return true end,
         ['mount'] = function() return true end,
         ['item'] = IsUsableItem,
     },
@@ -30,6 +32,7 @@ local Lookup = {
         ['empty'] = function() return nil end,
         ['macro'] = function() return nil end,
         ['summonmount'] = function() return nil end,
+        ['summonpet'] = function() return nil end,
         ['mount'] = function() return nil end,
         ['item'] = GetItemCooldown,
     },
@@ -57,6 +60,12 @@ local Lookup = {
             local _, _, icon = GetSpellInfo(spellId)
             return icon
         end,
+        ['summonpet'] = function(id)
+            if (not id) then return nil end;
+            local _, spellId = C_PetJournal.GetPetInfoByPetID(id)
+            local _, _, icon = GetSpellInfo(spellId)
+            return icon
+        end,
         ['mount'] = function(id)
             if (not id) then return nil end;
             local _, spellId = C_MountJournal.GetMountInfoByID(id)
@@ -69,19 +78,21 @@ local Lookup = {
         ['item'] = function(id) local count = GetItemCount(id); return count, count end,
         ['macro'] = function(id) return nil end,
         ['summonmount'] = function(id) return nil end,
+        ['summonpet'] = function(id) return nil end,
         ['mount'] = function(id) return nil end,
         ['empty'] = function() return nil end,
         ['flyout'] = function() return nil end,
     },
     tooltip = {
         ['spell'] = function(id)GameTooltip:SetSpellByID(id) end,
-        ['item'] = function(id) 
+        ['item'] = function(id)
             GameTooltip:SetHyperlink('item:' .. id)
         end,
         ['summonmount'] = function() return nil end,
+        ['summonpet'] = function() return nil end,
         ['mount'] = function() return nil end,
         ['empty'] = function() return nil end,
-        ['flyout'] = function(id, ref) 
+        ['flyout'] = function(id, ref)
             local title, description = GetFlyoutInfo(id)
             GameTooltip:SetOwner(ref, "ANCHOR_RIGHT");
             GameTooltip:AddLine(title, 1,1,1)
@@ -112,7 +123,7 @@ function d3ui_Button:AddUIElements()
     if (bar.config.DISPLAY.ORIENTATION == 'HORIZONTAL') then
         self:SetPoint('TOP', 0, -(self._id - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE))
     else
-        self:SetPoint('LEFT', 
+        self:SetPoint('LEFT',
             (self._id - ((row - 1) * rowCells) - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE),
             - (row - 1) * (bar.config.DISPLAY.SIZE + bar.config.DISPLAY.SPACE)
         )
@@ -131,7 +142,7 @@ function d3ui_Button:AddUIElements()
     background:SetPoint('BOTTOMRIGHT', 0,0)
     background:SetTexture(CONSTS.TEXTURES.BTN_BACKGROUND)
     self.background = background
-    
+
     local texture = self:CreateTexture(nil, "ARTWORK")
     texture:SetPoint('TOPLEFT', 2, -2)
     texture:SetPoint('BOTTOMRIGHT', -2, 2)
@@ -537,6 +548,7 @@ function d3ui_Button:ApplyConfig(config)
 
     self:AttachEvents()
 
+    self:SetUpMeta()
     self:Update()
 
     if (not InCombatLockdown()) then
@@ -544,7 +556,7 @@ function d3ui_Button:ApplyConfig(config)
             SetOverrideBindingClick(d3ui_Superframe, true, ActionBarBindMap[config.bind], self:GetName(), 'LeftButton')
         end
     else
-        -- print('WARNING: Cant change binding in combat')
+        print('WARNING: Cant change binding in combat')
     end
 
     self:UpdateCooldown()
@@ -575,7 +587,6 @@ function d3ui_ActionButtonCreate(barIndex, buttonIndex, bar)
     btn:AddUIElements()
     btn:EnableInteractions()
     -- SESURITY STUFF
-    btn:AttachSecureHandlers()
     btn:AttachSecureHandlers()
 
 

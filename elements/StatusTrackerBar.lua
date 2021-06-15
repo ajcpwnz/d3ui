@@ -43,14 +43,14 @@ function OnLeaveRep()
 end
 
 function IStatusTrackerBar:Update()
-    local hasExp = true
+    self.hasExp = true
 
     if (UnitLevel('player') >= CONSTS.MAX_LVL) then
         self.expBar:Hide()
-        hasExp = false
+        self.hasExp = false
     end
 
-    if (hasExp) then
+    if (self.hasExp) then
         local current, max = UnitXP('player'), UnitXPMax('player')
         local restedExp = GetXPExhaustion()
 
@@ -78,11 +78,11 @@ function IStatusTrackerBar:Update()
         self.repBar:Show()
     end
 
-    if (hasRep and hasExp) then
+    if (hasRep and self.hasExp) then
         self.frame:ClearAllPoints()
         self.frame:SetPoint("BOTTOMLEFT", 0,  -1)
     else
-        if (hasRep or hasExp) then
+        if (hasRep or  self.hasExp) then
             self.frame:ClearAllPoints()
             self.frame:SetPoint("BOTTOMLEFT", 0,-BAR_HEIGHT - 1)
         else
@@ -111,7 +111,7 @@ end
 function IStatusTrackerBar:CreateExpBar()
     local expBar = CreateFrame("StatusBar", 'd3ui_StatusTrackerBar_Exp', d3ui_StatusTrackerBar, BackdropTemplateMixin and "BackdropTemplate")
     d3ui_StatusTrackerBar_Exp:SetSize(BAR_WIDTH, BAR_HEIGHT)
-    d3ui_StatusTrackerBar_Exp:SetPoint("BOTTOM", 0, 0)
+    d3ui_StatusTrackerBar_Exp:SetPoint("TOP", 0, 0)
     d3ui_StatusTrackerBar_Exp:SetFrameLevel(0)
 
     expBar:SetScript("OnEnter", OnEnter)
@@ -149,7 +149,11 @@ end
 function IStatusTrackerBar:CreateRepBar()
     local repBar = CreateFrame("StatusBar", 'd3ui_StatusTrackerBar_Rep', d3ui_StatusTrackerBar, BackdropTemplateMixin and "BackdropTemplate")
     repBar:SetSize(BAR_WIDTH, BAR_HEIGHT)
-    repBar:SetPoint("TOP", 0, 0)
+    if(self.hasExp) then
+        repBar:SetPoint("BOTTOM", 0, 0)
+    else
+        repBar:SetPoint("TOP", 0, 0)
+    end
     repBar:SetFrameLevel(0)
 
     repBar:SetScript("OnEnter", OnEnterRep)
