@@ -103,7 +103,6 @@ function IActionBar:AddEventHandlers()
     local events = {}
 
     function events:PLAYER_SPECIALIZATION_CHANGED()
-        print('pr')
         inst:UpdateUnitProps()
         inst:UpdateBars()
     end
