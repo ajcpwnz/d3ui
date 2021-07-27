@@ -103,6 +103,7 @@ function d3ui:LoadElems()
     d3ui.StatusTrackerBar:Load()
 
     IActionBar:Load()
+    IStanceBar:Load()
 
     d3ui.Clarity:Load()
     --LoadTestFrame()

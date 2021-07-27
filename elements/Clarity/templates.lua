@@ -398,7 +398,7 @@ function ClarityTemplates:CombatStatusBar(name, stateToken, area)
         },
         handler = function(state, ctx)
             if (state.combat) then
-                if (ctx.frame.expiresAt) then
+                if (not ctx.frame or ctx.frame.expiresAt) then
                     return
                 end
 
@@ -417,11 +417,13 @@ function ClarityTemplates:CombatStatusBar(name, stateToken, area)
                     ctx.frame:PHide()
                 end
             else
+                if (not ctx.frame) then return end;
                 ctx.frame:PHide()
             end
         end,
         createCtx = function()
             local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(name)
+            if(not name) then return end;
             local currentCharges, maxCharges = GetSpellCharges(name)
             local shard, ctx = SpawnCtx()
 

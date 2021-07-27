@@ -15,6 +15,7 @@ elements\Components\Cooldown.lua
 elements\ActionBar\config.lua
 elements\ActionBar\Button.lua
 elements\ActionBar\Core.lua
+elements\ActionBar\Stances.lua
 
 init.lua
 elements\PlayerFrame.lua

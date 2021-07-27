@@ -77,6 +77,7 @@ function IClarity:PlugConfig(config)
 
         if(actor.createCtx) then
             local contextShard = actor.createCtx()
+
             for field, tail in pairs(dependencyMapping) do
                 if(not ContextMap[field]) then
                     ContextMap[field] = {}
